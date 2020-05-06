@@ -6,4 +6,4 @@ export const Classwork = () => {
         Classwork
     </div>
     )
-}
+}  

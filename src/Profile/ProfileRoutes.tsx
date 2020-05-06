@@ -3,13 +3,13 @@
 import React from 'react';
 import { Hamburger } from '../Shared/Hamburger';
 import {BrowserRouter, Route, Link, Switch } from 'react-router-dom';
-import { Stream } from './Stream';
 import { Classwork } from './Classwork';
 import { People } from './People';
 import { Grades } from './Grades';
 import { Grid } from '@material-ui/core';
 import {css, jsx} from '@emotion/core';
 import styled from '@emotion/styled';
+import { Stream } from './Stream/Stream';
 
 const ProfilePagesLink = css`
 
@@ -46,9 +46,9 @@ export const Profile = () => {
                 </Grid>
            </Header>
             <Switch>
-            <Route path="/stream" ><Stream/></Route>
-            <Route path="/classwork" ><Classwork/></Route>
-            <Route path="/people" ><People/></Route>
+            <Route path="/stream"><Stream/></Route>
+            <Route path="/classwork"><Classwork/></Route>
+            <Route path="/people"><People/></Route>
             <Route path="/Grades"><Grades/></Route>
             {/* <Redirect to = "/stream"></Redirect>> */}
             </Switch>
