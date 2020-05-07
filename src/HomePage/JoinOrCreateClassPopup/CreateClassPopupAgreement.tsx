@@ -19,8 +19,8 @@ const styledInnerPopup = css`
 padding-top: 20px;
 `
 export const CreateClassPopupAgreement = (props: any) =>{
-    console.log("popup")
     const [open, setOpen] = React.useState(true);
+    const [agree, setAgree] = React.useState(true)
     const openCreateClassPopup = () =>{
         setOpen(!open)
         props.createClass(!open)
@@ -36,10 +36,12 @@ export const CreateClassPopupAgreement = (props: any) =>{
             G Suite for Education lets schools decide which Google services their students can use, and provides additional privacy and security
             protections that are important in a school setting. Students cannot use Google Classroom at a school with personal accounts.</div>
             <Grid css={styledInnerPopup}>
-                <Checkbox></Checkbox>
+                <Grid>
+                    <Checkbox color="primary" onChange={() => setAgree(!agree)}/>
+                    I agree to all the policies
+                </Grid>
             </Grid>
-            <Button onClick={openCreateClassPopup}>Continue</Button>
-
+            <Button disabled={agree} onClick={openCreateClassPopup}>Continue</Button>
             </Grid>   
         </div>
       )

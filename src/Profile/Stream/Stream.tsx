@@ -12,6 +12,7 @@ import { Post } from './Post';
 
 const streamheader = css`
     background-image: url("https://gstatic.com/classroom/themes/img_kayaking.jpg");
+    padding:20px;
     `
 
 export const StyledBox = styled(Grid)`
@@ -20,17 +21,22 @@ export const StyledBox = styled(Grid)`
     padding: 10px; 
 
 `
-
+export interface IClassDetail{
+    className: String,
+    section: String,
+    subject: String,
+    room: String,
+}
 export const Stream = ()  => {
 
-    // const [value, setValue]           = React.useState([]);
+    const [value, setValue] = React.useState<IClassDetail[]>([]);
     const [createPost, setCreatePost] = React.useState(false);
     const [inputPost, setinputPost] = React.useState<any>([]);
 
-    console.log(createPost)
-    console.log(inputPost)
+    // console.log(createPost)
+    // console.log(inputPost)
     React.useEffect(() => {
-        // fetchData();
+        fetchData();
       });
 
     //  const fetchData = async () => {
@@ -40,19 +46,25 @@ export const Stream = ()  => {
     // .then(res => setValue(res));
     //  console.log("api return", value[0]);
     //  }
+
+     const fetchData = async () => {
+       console.log("Fetch")
+       await (await (fetch('http://localhost:8000/course/list', {method: 'GET'}))).json().then(json => setValue(json))
+    //    res.json()
+    //    .then(res => setValue(res));
+         }
     return(
         <div css={css`width: 65%; padding-left: 15%;`}>
             <Grid>
                 <div css={streamheader}>
+                    {value.map((item)=>(
                     <div>
-                        <div>Couse Name</div>
-                        <div>Section</div>
-                        <div>Class Name</div>
+                        <div>{item.className}</div>
+                        <div>{item.section}</div>
+                        <div>{item.subject}</div>
                     </div>
-                    <div css={css`padding-top:10%`}>
-                        <div>Select photo</div> 
-                        <div>Upload photo</div>
-                    </div>
+                    )
+                    )}
                 </div>
             </Grid>
             <Grid container direction="row" css = {css`padding-top: 3%;`}>

@@ -12,6 +12,7 @@ import Popup from './JoinOrCreateClassPopup/Popup';
 import CreateClassPopupAgreement from './JoinOrCreateClassPopup/CreateClassPopupAgreement';
 import CreateClassPopup from './JoinOrCreateClassPopup/CreateClassPopup';
 import { Hamburger } from '../Shared/Hamburger';
+import { ClassCard } from './JoinOrCreateClassPopup/ClassCard';
 
 
 const Header = styled('div')`
@@ -35,7 +36,6 @@ font-family: cursive;
 font-size: 30px;
 padding-left: 10px;
 `
-
 
 const listItemStyled = css`
 top: 25px !important;
@@ -80,6 +80,7 @@ function Home() {
 
   return (
    <React.Fragment>
+     <Grid>
      <Header>
        <StyledHeaderIcons container item xs={12} direction='row'>
         <Grid xs={11} container>
@@ -108,7 +109,10 @@ function Home() {
         <CreateClassPopupAgreement createClass={OpenCreateClassPopup} />
       </Modal>
       <Modal open={openCreatePopup} onClose={() => {setOpenCreatePopup(!openCreatePopup)}}><CreateClassPopup open = {profile}/></Modal>
-    
+      </Grid>
+      <Grid>
+        <ClassCard></ClassCard>
+      </Grid>
    </React.Fragment>
   );
 }
