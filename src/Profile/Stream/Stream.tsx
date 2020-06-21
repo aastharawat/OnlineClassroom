@@ -8,12 +8,18 @@ import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import AddIcon from '@material-ui/icons/Add';
 import { CreatePost } from './CreatePost';
 import { Post } from './Post';
+import { IClass } from '../../HomePage/JoinOrCreateClassPopup/CreateClassPopup';
+import { IClassDetail } from '../../Interfaces/ClassDetail';
+import { useLocation, useParams } from 'react-router-dom';
 
 
 const streamheader = css`
     background-image: url("https://gstatic.com/classroom/themes/img_kayaking.jpg");
-    padding:20px;
-    `
+    padding:30px;
+    color: white;
+    height: 200px;
+    border-radius: 10px;
+`
 
 export const StyledBox = styled(Grid)`
     border-radius: 8px;
@@ -21,50 +27,48 @@ export const StyledBox = styled(Grid)`
     padding: 10px; 
 
 `
-export interface IClassDetail{
-    className: String,
-    section: String,
-    subject: String,
-    room: String,
-}
-export const Stream = ()  => {
-
-    const [value, setValue] = React.useState<IClassDetail[]>([]);
+export const StyledLink = styled('div')`
+text-decoration: none;
+color: white;
+text-align: end;
+bottom: -100px;
+position: relative;
+:hover {
+    text-decoration: underline;
+    }
+`
+export const Stream = (props: any)  => {
+    let id = useParams();
+    console.log("sushila stream s", id)
+    const [value, setValue] = React.useState<IClassDetail>();
     const [createPost, setCreatePost] = React.useState(false);
     const [inputPost, setinputPost] = React.useState<any>([]);
 
-    // console.log(createPost)
-    // console.log(inputPost)
     React.useEffect(() => {
         fetchData();
       });
 
-    //  const fetchData = async () => {
-    //  console.log("Fetch")
-    // const res = await (fetch('http://localhost:8000/course/list', {method: 'GET'}))
-    // res.json()
-    // .then(res => setValue(res));
-    //  console.log("api return", value[0]);
-    //  }
-
      const fetchData = async () => {
-       console.log("Fetch")
-       await (await (fetch('http://localhost:8000/course/list', {method: 'GET'}))).json().then(json => setValue(json))
-    //    res.json()
-    //    .then(res => setValue(res));
-         }
+    //  console.log("Fetch", value)
+    const res = await (fetch(`http://localhost:8000/course/list/${id}`, {method: 'GET'}))
+    res.json()
+    .then(res => setValue(res));
+     }
+
+
+  let [data] = React.useState<IClass>();
+  data = {name:"React", section:"B", subject:"React", room: ""}
+
+
     return(
-        <div css={css`width: 65%; padding-left: 15%;`}>
+        <div css={css`width: 65%; padding-left: 15%; padding-top:3%`}>
             <Grid>
                 <div css={streamheader}>
-                    {value.map((item)=>(
-                    <div>
-                        <div>{item.className}</div>
-                        <div>{item.section}</div>
-                        <div>{item.subject}</div>
-                    </div>
-                    )
-                    )}
+                    <div>{value?.className}</div>
+                    <div>{value?.section}</div>
+                    <div>{value?.subject}</div>
+                    <StyledLink>Select theme</StyledLink>
+                    <StyledLink>Upload Photo</StyledLink>
                 </div>
             </Grid>
             <Grid container direction="row" css = {css`padding-top: 3%;`}>
@@ -93,7 +97,6 @@ export const Stream = ()  => {
                      </StyledBox>
                     :
                         inputPost.map((post: any)=> (<Post post = {post}></Post>))
-
                         }
                     </Grid>
                     </Grid>

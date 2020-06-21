@@ -1,8 +1,7 @@
 /** @jsx jsx */
 
 import React from 'react';
-import { Hamburger } from '../Shared/Hamburger';
-import {BrowserRouter, Route, Link, Switch } from 'react-router-dom';
+import {BrowserRouter, Route, Link, Switch, useParams } from 'react-router-dom';
 import { Classwork } from './Classwork';
 import { People } from './People';
 import { Grades } from './Grades';
@@ -11,50 +10,38 @@ import {css, jsx} from '@emotion/core';
 import styled from '@emotion/styled';
 import { Stream } from './Stream/Stream';
 
-const ProfilePagesLink = css`
-
-`
-const Header = styled('div')`
-height: 4rem;
-background-color: #f8f8f8;
-`
-
 const StyledLinks = styled(Link)`
-padding: .125rem 1.5rem 0 1.5rem;
 text-decoration: none;
-coloe: rgb(211,211,211);
-
+color: rgb(109, 109, 109);
+padding: 1rem 1.5rem 0 1.5rem;
 :hover{
-    background-color: rgb(220,220,220);
     color: black;
-}
+    border-bottom-style: solid;
+    border-radius: 0 0 0.25rem 0.25rem ;
+    border-color: black;
+    background:  #f1eded;
+    }
 `
 
 export const Profile = () => {
+    const {id} = useParams();
+    console.log("mom", id)
     return(
         <React.Fragment>
             <BrowserRouter>
-            <Header>
-            <Grid container direction="row">
-                <Grid xs={4}><Hamburger></Hamburger></Grid>  
-                <Grid xs={4}container css={ProfilePagesLink} direction="row">
-                    <StyledLinks to="/stream">Stream</StyledLinks>
+                <Grid css={css`padding-left: 32%; height: 65px;`} container direction="row">
+                    <StyledLinks to={`/profile/${id}`}>Stream</StyledLinks>
                     <StyledLinks to="/classwork" >Classwork</StyledLinks>
                     <StyledLinks to="/people">People</StyledLinks>
                     <StyledLinks to="/grades">Grades</StyledLinks>
                 </Grid>
-                </Grid>
-           </Header>
-            <Switch>
-            <Route path="/stream"><Stream/></Route>
-            <Route path="/classwork"><Classwork/></Route>
-            <Route path="/people"><People/></Route>
-            <Route path="/Grades"><Grades/></Route>
-            {/* <Redirect to = "/stream"></Redirect>> */}
-            </Switch>
-
+                <Switch>
+                    <Route path="/profile/:id" component={Stream}></Route>
+                    <Route path="/classwork"><Classwork/></Route>
+                    <Route path="/people"><People/></Route>
+                    <Route path="/Grades"><Grades/></Route>
+                </Switch>
             </BrowserRouter>
-            {/* <Redirect to="/classwork"><div>Aastha</div></Redirect> */}
         </React.Fragment>
     )
 }

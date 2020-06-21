@@ -11,14 +11,7 @@ import {Menu,  MenuItem } from '@material-ui/core';
 import Popup from './JoinOrCreateClassPopup/Popup';
 import CreateClassPopupAgreement from './JoinOrCreateClassPopup/CreateClassPopupAgreement';
 import CreateClassPopup from './JoinOrCreateClassPopup/CreateClassPopup';
-import { Hamburger } from '../Shared/Hamburger';
-import { ClassCard } from './JoinOrCreateClassPopup/ClassCard';
-
-
-const Header = styled('div')`
-height: 4rem;
-background-color: #f8f8f8;
-`
+import { ClassCard } from './Card/ClassCard';
 
 const StyledHeaderIcons = styled(Grid)`
 display: flex;
@@ -41,7 +34,7 @@ const listItemStyled = css`
 top: 25px !important;
 left: -95px !important;
 `
-const ss = css`
+const StyledMenu = styled(MenuItem)`
 font-size: 0.89rem !important;
 `
 function Home() {
@@ -81,10 +74,9 @@ function Home() {
   return (
    <React.Fragment>
      <Grid>
-     <Header>
        <StyledHeaderIcons container item xs={12} direction='row'>
         <Grid xs={11} container>
-          <Hamburger></Hamburger>
+
          <div css={styledLabel}>Classroom</div>
         </Grid>
 
@@ -94,15 +86,14 @@ function Home() {
            
          </Grid>
          <Menu open={option} anchorEl={anchorEl} css={listItemStyled}>
-           <MenuItem css={ss} onClick={JoinClass}>Join class</MenuItem>
-           <MenuItem css={ss} onClick={CreateClass}>Create class</MenuItem>
+           <StyledMenu onClick={JoinClass}>Join class</StyledMenu>
+           <StyledMenu onClick={CreateClass}>Create class</StyledMenu>
          </Menu>
 
          <Grid css={styleIcon} ><AppsIcon ></AppsIcon></Grid>
          <Grid css={styleIcon}><AccountBoxIcon ></AccountBoxIcon></Grid>
         </Grid>
         </StyledHeaderIcons>
-     </Header>
      <Modal open={showJoinClass} onClose={JoinClass}><Popup/></Modal>
 
       <Modal open={showCreateClass} onClose ={CreateClass}>
