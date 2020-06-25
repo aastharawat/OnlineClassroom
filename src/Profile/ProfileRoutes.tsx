@@ -24,22 +24,36 @@ padding: 1rem 1.5rem 0 1.5rem;
 `
 
 export const Profile = () => {
+
     const {id} = useParams();
-    console.log("mom", id)
     return(
         <React.Fragment>
             <BrowserRouter>
                 <Grid css={css`padding-left: 32%; height: 65px;`} container direction="row">
-                    <StyledLinks to={`/profile/${id}`}>Stream</StyledLinks>
-                    <StyledLinks to="/classwork" >Classwork</StyledLinks>
-                    <StyledLinks to="/people">People</StyledLinks>
-                    <StyledLinks to="/grades">Grades</StyledLinks>
+                    <StyledLinks 
+                    to={`/profile/${id}`} 
+                    id = "stream" 
+                    > 
+                     Stream</StyledLinks>
+                    <StyledLinks 
+                    to="/classwork" 
+                    id = "classwork">
+                    Classwork</StyledLinks>
+                    <StyledLinks 
+                    to="/people" 
+                    id = "people">
+                    People</StyledLinks>
+                    <StyledLinks 
+                    to="/grades" 
+                    id = "grades">
+                    Grades</StyledLinks>
                 </Grid>
                 <Switch>
-                    <Route path="/profile/:id" component={Stream}></Route>
+                    <Route path="/profile/:id"><Stream/> </Route>
                     <Route path="/classwork"><Classwork/></Route>
                     <Route path="/people"><People/></Route>
                     <Route path="/Grades"><Grades/></Route>
+
                 </Switch>
             </BrowserRouter>
         </React.Fragment>

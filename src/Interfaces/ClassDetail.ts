@@ -1,5 +1,5 @@
 export interface IClassDetail{
-    id: string;
+    _id: string;
     className: String,
     section: String,
     subject: String,

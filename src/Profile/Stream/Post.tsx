@@ -1,18 +1,10 @@
 /** @jsx jsx */
 
-import { StyledBox } from './Stream';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import { Grid, Divider } from '@material-ui/core';
-import styled from '@emotion/styled';
 import { jsx, css } from '@emotion/core';
+import { StyledBox, StyledCommentBox } from './stream.style';
 
-const StyledCommentBox = styled('input')`
-    width: 90%;
-    border-radius: 10px;
-    height: 35px;
-    border: 1px solid;
-    border-color: #dedddd;
-`
 export const Post = (props: any) => {
 
     return(

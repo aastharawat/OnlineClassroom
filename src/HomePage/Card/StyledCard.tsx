@@ -8,7 +8,7 @@ import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 
 export const StyledCard = (props: any)=>{
     return( 
-        <StyledLink to={`/profile/5eaea333959eb86e48172e50`}>
+        <StyledLink to={`/profile/${props.id}`}>
         <div css={styledCard}>
             <div css={styledCardBottom}>{props.children}</div>
             <div css={css`padding-top: 160px;`} >

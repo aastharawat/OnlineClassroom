@@ -5,28 +5,30 @@ import { Grid } from '@material-ui/core';
 import { IClassDetail } from '../../Interfaces/ClassDetail';
 import { StyledCard } from './StyledCard';
 import { jsx, css } from '@emotion/core';
+import LoaderDesign from '../../Shared/Loader';
 
 
 export const ClassCard = () => {
     let [value, setValue] = React.useState<IClassDetail[]>([]);
+    const [isLoading, setIsLoading] = React.useState(true);
 
     React.useEffect(() => {
         fetchData()
       }, []);
 
       const fetchData = async ()=> {
-        console.log(" card Fetch")
         const res = await fetch('http://localhost:8000/course/list', {method: 'GET'});
         const resData = await res.json();
         setValue(resData)
-        console.log(value)
+        setIsLoading(false)
       }
 
     return(
         <Grid container direction="row">
-            {value.map((item)=>(
+            {isLoading && <LoaderDesign/>}
+            {value.map((item, key)=>(
                 <Grid css={css`padding: 20px`}>
-                    <StyledCard id ={item.id} >
+                    <StyledCard id={item._id} >
                         <div css={css`font-family: 'Google Sans',Roboto,Arial,sans-serif; font-size: 1.375rem;`}>{item.className}</div>
                         <div>{item.section}</div>
                     </StyledCard>

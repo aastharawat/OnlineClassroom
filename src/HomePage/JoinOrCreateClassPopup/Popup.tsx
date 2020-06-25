@@ -1,21 +1,8 @@
 /** @jsx jsx */
 
-import {css, jsx} from '@emotion/core';
+import {jsx} from '@emotion/core';
 import {Grid, Button, TextField} from '@material-ui/core';
-const styledPopup = css`
-border-radius: 10px ;
-margin: 200px;
-width: 23%;
-background-color: white;
-position: unset;
-margin-left: 580px;
-`
-
-const styledPopupOut = css`
-padding: 20px;
-width: 100%
-margin: 20px;
-`
+import { styledPopup, styledPopupOut } from './Popup.styled';
 
 export function Popup(){
     console.log("popup")

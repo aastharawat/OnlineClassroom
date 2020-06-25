@@ -1,23 +1,10 @@
 /** @jsx jsx */
 
-import {css, jsx} from '@emotion/core';
+import {jsx} from '@emotion/core';
 import {Grid, Checkbox, Button} from '@material-ui/core';
 import React from 'react';
+import { styledClassPopupAgreement, styledPopupOutAgreement, styledInnerPopup } from './Popup.styled';
 
-const styledPopup = css`
-border-radius: 10px ;
-margin-top: 200px;
-width: 23%;
-background-color: white;
-position: unset;
-margin-left: 580px;
-`
-const styledPopupOut = css`
-margin: 20px;
-`
-const styledInnerPopup = css`
-padding-top: 20px;
-`
 export const CreateClassPopupAgreement = (props: any) =>{
     const [open, setOpen] = React.useState(true);
     const [agree, setAgree] = React.useState(true)
@@ -27,8 +14,8 @@ export const CreateClassPopupAgreement = (props: any) =>{
     }
 
     return (
-        <div css={styledPopup}>
-            <Grid css={styledPopupOut}>
+        <div css={styledClassPopupAgreement}>
+            <Grid css={styledPopupOutAgreement}>
 
             <div css={styledInnerPopup}>Using Classroom at a school with students?</div>
             <div css={styledInnerPopup}>If so, your school must sign up for a free G Suite for Education account before you can use Classroom. Learn More

@@ -3,65 +3,38 @@
 import { css, jsx } from '@emotion/core'
 import React from 'react'
 import { Grid } from '@material-ui/core';
-import styled from '@emotion/styled';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import AddIcon from '@material-ui/icons/Add';
 import { CreatePost } from './CreatePost';
 import { Post } from './Post';
-import { IClass } from '../../HomePage/JoinOrCreateClassPopup/CreateClassPopup';
 import { IClassDetail } from '../../Interfaces/ClassDetail';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import LoaderDesign from '../../Shared/Loader';
+import { streamheader, StyledLink, StyledBox } from './stream.style';
 
-
-const streamheader = css`
-    background-image: url("https://gstatic.com/classroom/themes/img_kayaking.jpg");
-    padding:30px;
-    color: white;
-    height: 200px;
-    border-radius: 10px;
-`
-
-export const StyledBox = styled(Grid)`
-    border-radius: 8px;
-    border: 1px solid #e2dada;
-    padding: 10px; 
-
-`
-export const StyledLink = styled('div')`
-text-decoration: none;
-color: white;
-text-align: end;
-bottom: -100px;
-position: relative;
-:hover {
-    text-decoration: underline;
-    }
-`
 export const Stream = (props: any)  => {
-    let id = useParams();
-    console.log("sushila stream s", id)
+    let {id} = useParams();
+
     const [value, setValue] = React.useState<IClassDetail>();
     const [createPost, setCreatePost] = React.useState(false);
     const [inputPost, setinputPost] = React.useState<any>([]);
+    const [isLoading, setIsLoading] = React.useState(true);
 
     React.useEffect(() => {
-        fetchData();
-      });
+        fetchData()
+      }, []);
 
      const fetchData = async () => {
-    //  console.log("Fetch", value)
-    const res = await (fetch(`http://localhost:8000/course/list/${id}`, {method: 'GET'}))
-    res.json()
-    .then(res => setValue(res));
+        const url = `http://localhost:8000/course/list/${id}`
+        const res = await fetch(url, {method: 'GET'});
+        await res.json().then(res=> {setValue(res)});
+        setIsLoading(false)
      }
 
-
-  let [data] = React.useState<IClass>();
-  data = {name:"React", section:"B", subject:"React", room: ""}
-
-
     return(
-        <div css={css`width: 65%; padding-left: 15%; padding-top:3%`}>
+        <div>
+            <div css={css`width: 65%; padding-left: 15%; padding-top:3%`}>
+            {isLoading && <LoaderDesign/>}
             <Grid>
                 <div css={streamheader}>
                     <div>{value?.className}</div>
@@ -102,6 +75,7 @@ export const Stream = (props: any)  => {
                     </Grid>
                 </Grid>
             </Grid>
+    </div>
     </div>
     )   
 }

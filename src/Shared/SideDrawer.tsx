@@ -2,7 +2,7 @@
 
 import { Grid, Divider } from '@material-ui/core'
 import {css, jsx} from '@emotion/core';
-import { NavLink, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import React from 'react';
 import { IClassDetail } from '../Interfaces/ClassDetail';
 import styled from '@emotion/styled';
@@ -39,7 +39,7 @@ export const SideDrawer = () => {
 
     React.useEffect(() => {
         fetchData()
-      });
+      }, []);
 
 
       const fetchData = async ()=> {
@@ -47,7 +47,6 @@ export const SideDrawer = () => {
         const res = await fetch('http://localhost:8000/course/list', {method: 'GET'});
         const resData = await res.json();
         setValue(resData)
-        console.log(value)
       }
 
 
@@ -57,8 +56,9 @@ export const SideDrawer = () => {
                 <StyledLink to="/" css={css`padding: 20px;`}>Classes</StyledLink>
                 <Divider/>
                 {value.map((item)=>(
-                <StyledLink to={`/profile/5eaea333959eb86e48172e50`}>
-                     <div css={styledClasses}>{item.className}</div>
+                
+                <StyledLink to={`/profile/${item._id}`}>
+                  <div css={styledClasses}>{item.className}</div>
                 </StyledLink>
                 ))}
                 </Grid>
