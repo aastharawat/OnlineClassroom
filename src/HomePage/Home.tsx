@@ -12,6 +12,9 @@ import Popup from './JoinOrCreateClassPopup/Popup';
 import CreateClassPopupAgreement from './JoinOrCreateClassPopup/CreateClassPopupAgreement';
 import CreateClassPopup from './JoinOrCreateClassPopup/CreateClassPopup';
 import { ClassCard } from './Card/ClassCard';
+import { styledIcon } from './Card/Card.style';
+import { SignIn } from './Register/SignIn';
+import { prependOnceListener } from 'cluster';
 
 const StyledHeaderIcons = styled(Grid)`
 display: flex;
@@ -19,15 +22,11 @@ padding: 20px;
 `
 
 const styleIcon = css`
-padding-left: 13px;
+padding-left: 15px;
+color: #5f636;
 :hover{
   color: grey;
 }
-`
-const styledLabel = css`
-font-family: cursive;
-font-size: 30px;
-padding-left: 10px;
 `
 
 const listItemStyled = css`
@@ -37,17 +36,42 @@ left: -95px !important;
 const StyledMenu = styled(MenuItem)`
 font-size: 0.89rem !important;
 `
-function Home() {
+const StyledLabel = styled('div')`
+font-family: cursive;
+font-size: 30px;
+width: 90%;
+@media all and (max-width: 1300px) {
+      width: 80%;
+}
+@media all and (max-width: 800px) {
+  width: 70%;
+}
+`
+
+const StyledIcon = styled('div')`
+width:10%;
+@media all and (max-width: 1300px) {
+    width: 20%;
+}
+@media all and (max-width: 800px) {
+  width: 30%;
+}
+`
+
+function Home(props: any) {
 
   const [option, setOption] = React.useState(false);
   const [showJoinClass, setshowJoinClass] = React.useState(false);
   const [showCreateClass, setshowCreateClass] = React.useState(false);
   const [openCreatePopup, setOpenCreatePopup] = React.useState(false);
   const [openProfile, setOpenProfile] = React.useState(false);
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorElAddIcon, setAnchorElAddIcon] = React.useState(null);
+  const [openSignIn, setOpenSignIn] = React.useState(false);
+
+  console.log(props.loggedInUser)
   const onClickAdd = (event: any) =>{
     setOption(!option);
-    setAnchorEl(event.currentTarget)
+    setAnchorElAddIcon(event.currentTarget)
   }
 
   const JoinClass = () => {
@@ -58,7 +82,6 @@ function Home() {
  const CreateClass = () => {
   setshowCreateClass(!showCreateClass);
   setOption(false)
-
  }
 
  const OpenCreateClassPopup = () => {
@@ -71,38 +94,41 @@ function Home() {
   setOpenCreatePopup(false)
  }
 
+ const handleSignIn = ()=>{
+  setOpenSignIn(!openSignIn)
+  
+ }
   return (
    <React.Fragment>
      <Grid>
-       <StyledHeaderIcons container item xs={12} direction='row'>
-        <Grid xs={11} container>
+       <StyledHeaderIcons container item direction="row">
+        <StyledLabel>
+        Classroom
+        </StyledLabel>
 
-         <div css={styledLabel}>Classroom</div>
-        </Grid>
-
-        <Grid container item direction="row" xs={1} >
-         <Grid css={styleIcon} onClick={onClickAdd}>
-           <AddIcon ></AddIcon>
-           
-         </Grid>
-         <Menu open={option} anchorEl={anchorEl} css={listItemStyled}>
+        <StyledIcon>
+          <AddIcon onClick={onClickAdd} css={styleIcon}/>
+         <Menu open={option} anchorEl={anchorElAddIcon} css={listItemStyled}>
            <StyledMenu onClick={JoinClass}>Join class</StyledMenu>
            <StyledMenu onClick={CreateClass}>Create class</StyledMenu>
          </Menu>
 
-         <Grid css={styleIcon} ><AppsIcon ></AppsIcon></Grid>
-         <Grid css={styleIcon}><AccountBoxIcon ></AccountBoxIcon></Grid>
-        </Grid>
+         <AppsIcon css={styleIcon}></AppsIcon>
+         <AccountBoxIcon css={styleIcon} onClick={handleSignIn}></AccountBoxIcon>
+        {openSignIn && <SignIn isSignUpOpen = {openSignIn} onModalClose={()=>{setOpenSignIn(!openSignIn)}} />}
+        </StyledIcon>
         </StyledHeaderIcons>
      <Modal open={showJoinClass} onClose={JoinClass}><Popup/></Modal>
 
       <Modal open={showCreateClass} onClose ={CreateClass}>
         <CreateClassPopupAgreement createClass={OpenCreateClassPopup} />
       </Modal>
-      <Modal open={openCreatePopup} onClose={() => {setOpenCreatePopup(!openCreatePopup)}}><CreateClassPopup open = {profile}/></Modal>
+      <Modal open={openCreatePopup} onClose={() => {setOpenCreatePopup(!openCreatePopup)}}>
+        <CreateClassPopup open = {profile}/>
+      </Modal>
       </Grid>
       <Grid>
-        <ClassCard></ClassCard>
+        <ClassCard/>
       </Grid>
    </React.Fragment>
   );

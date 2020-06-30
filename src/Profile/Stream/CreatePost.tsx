@@ -18,13 +18,13 @@ export const CreatePost = (props: any) => {
             <StyledBox>
                 <form onSubmit={postMessage}>
                     <TextField
-                        css={css`width:100%;`}
+                        css={css`width:100%`}
                         onChange= {(e) => setInputPost(e.target.value)}
                         label="Share with class"
                         multiline
-                        variant="filled"
+                        variant="standard"
                         />
-                    <div css={css`float: right;`}>
+                    <div>
                         <Button onClick={()=> props.open()}>Cancel</Button>
                         <Button type = "submit">Post</Button>
                     </div>

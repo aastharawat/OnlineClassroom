@@ -43,7 +43,6 @@ export const SideDrawer = () => {
 
 
       const fetchData = async ()=> {
-        console.log("Fetch")
         const res = await fetch('http://localhost:8000/course/list', {method: 'GET'});
         const resData = await res.json();
         setValue(resData)

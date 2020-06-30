@@ -5,7 +5,7 @@ import {css, jsx} from '@emotion/core';
 
 export const Hamburger = (props: any) => {
     return(
-        <div css={css`height: 100%; padding: 15px;`}>
+        <div css={css`height: 100%; padding: 15px; color: #5f636; `}>
             <MenuIcon fontSize="large" onClick={props.onClick}></MenuIcon>  
         </div>
     )

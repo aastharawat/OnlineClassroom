@@ -1,15 +1,29 @@
 /** @jsx jsx */
 
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import {BrowserRouter, Route, Link, Switch, useParams } from 'react-router-dom';
-import { Classwork } from './Classwork';
-import { People } from './People';
-import { Grades } from './Grades';
 import { Grid } from '@material-ui/core';
 import {css, jsx} from '@emotion/core';
 import styled from '@emotion/styled';
-import { Stream } from './Stream/Stream';
+import { LoaderDesign } from '../Shared/Loader';
 
+const Stream = lazy(() =>
+import('./Stream/Stream')
+    .then(({ Stream }) => ({ default: Stream })),
+);
+
+const People = lazy(() =>
+import('./People')
+    .then(({ People }) => ({ default: People })),
+);
+const Grades = lazy(() =>
+import('./Grades')
+    .then(({ Grades }) => ({ default: Grades })),
+);
+const Classwork = lazy(() =>
+import('./Classwork')
+    .then(({ Classwork }) => ({ default: Classwork })),
+);
 const StyledLinks = styled(Link)`
 text-decoration: none;
 color: rgb(109, 109, 109);
@@ -48,13 +62,14 @@ export const Profile = () => {
                     id = "grades">
                     Grades</StyledLinks>
                 </Grid>
+                <Suspense fallback={<div><LoaderDesign/></div>}>
                 <Switch>
                     <Route path="/profile/:id"><Stream/> </Route>
                     <Route path="/classwork"><Classwork/></Route>
                     <Route path="/people"><People/></Route>
                     <Route path="/Grades"><Grades/></Route>
-
                 </Switch>
+                </Suspense>
             </BrowserRouter>
         </React.Fragment>
     )

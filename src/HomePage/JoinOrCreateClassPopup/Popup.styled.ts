@@ -3,18 +3,19 @@ import {css} from '@emotion/core';
 export const styledCreateClassPopup = css`
 border-radius: 10px ;
 margin-top: 200px;
-width: 40%;
+width: 40% !important;
 background-color: white;
 position: unset;
 margin-left: 30%;
+padding: 30px;
 `
 export const styledInput = css`
 width: 100%;
 padding-bottom: 20px;
 `
 
-export const styledPadding = css`
-padding: 10px
+export const styledTextField = css`
+padding: 30px;
 `
 
 export const styledClassPopupAgreement = css`

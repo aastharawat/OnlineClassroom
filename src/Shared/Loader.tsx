@@ -10,8 +10,10 @@ export const LoaderDesign = () => {
         color="#cac2c2"
         height={100}
         width={100}
-        css={css` margin: 200px;
-        padding-left: 450px;`}
+        css={css` 
+        margin: 200px;
+        padding-left: 450px;
+        `}
      />
     );
    }

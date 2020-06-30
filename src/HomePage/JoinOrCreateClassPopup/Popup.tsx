@@ -5,7 +5,6 @@ import {Grid, Button, TextField} from '@material-ui/core';
 import { styledPopup, styledPopupOut } from './Popup.styled';
 
 export function Popup(){
-    console.log("popup")
     return (
         <Grid css={styledPopup}>
           <Grid css={styledPopupOut}>
