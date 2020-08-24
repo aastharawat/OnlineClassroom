@@ -36,16 +36,17 @@ export function SignIn(props: any) {
   const [password, setPassword] = React.useState<string>();
   const [message, setMessage] = React.useState(null);
 
-  const userData = { email: email, password: password };
-
   const handleSignInForm = async (e: any) => {
     e.preventDefault();
+    const userData = { email: email, password: password };
 
-    AuthService.login(userData).then((data) => {
-      console.log(data);
-      const { isAuthenticated, user, message } = data;
+    AuthService.login(userData).then((data: any) => {
+      const { isAuthenticated, token } = data;
       if (isAuthenticated) {
+        console.log("data sign", token);
+        localStorage.setItem("auth-token", token);
         props.onModalClose();
+        history.push("/home");
       } else {
         setMessage(message);
       }

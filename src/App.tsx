@@ -24,15 +24,21 @@ export const Header = styled(Grid)`
 export function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState({
-    isAuthenticated: undefined,
-    user: undefined,
+    token: null as any,
+    email: undefined,
+    username: undefined,
   });
-  const [isAuthenticated, setIsAuthenticated] = useState(null);
 
   useEffect(() => {
-    authService.isAuthenticated().then((data) => {
-      console.log("Aastha", data);
+    let token = localStorage.getItem("auth-token");
+    if (token === null) {
+      localStorage.setItem("auth-token", "");
+      token = "";
+    }
+    authService.isTokenValid(token).then((res) => {
+      setUser({ token: token, email: res.email, username: res.username });
     });
+
   }, []);
 
   return (
