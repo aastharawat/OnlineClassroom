@@ -47,4 +47,19 @@ export default {
       }
     });
   },
+
+  getClasses: (token) => {
+    return fetch("http://localhost:8000/user/classList", {
+      method: "GET",
+      headers: {
+        authorization: token,
+      },
+    }).then((res) => {
+      if (res.status !== 401) {
+        return res.json().then((data) => data);
+      } else {
+        return res.json().then((data) => data);
+      }
+    });
+  },
 };

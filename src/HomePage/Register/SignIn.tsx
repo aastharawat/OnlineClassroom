@@ -7,7 +7,7 @@ import React, { useContext } from "react";
 import styled from "@emotion/styled";
 import AuthService from "../../services/authService";
 import { useHistory } from "react-router-dom";
-
+import UserContext from "../../Context/authContext";
 const styledSignUpPage = css`
   border-radius: 10px;
   margin: 200px;
@@ -31,10 +31,10 @@ export function SignIn(props: any) {
   const history = useHistory();
 
   const [openSignUp, setOpenSignUp] = React.useState<boolean>(props);
-  // const [value, setValue] = React.useState({});
   const [email, setEmail] = React.useState<string>();
   const [password, setPassword] = React.useState<string>();
   const [message, setMessage] = React.useState(null);
+  const { setUser } = useContext(UserContext);
 
   const handleSignInForm = async (e: any) => {
     e.preventDefault();
@@ -43,10 +43,10 @@ export function SignIn(props: any) {
     AuthService.login(userData).then((data: any) => {
       const { isAuthenticated, token } = data;
       if (isAuthenticated) {
-        console.log("data sign", token);
+        setUser({ token: token });
         localStorage.setItem("auth-token", token);
-        props.onModalClose();
         history.push("/home");
+        props.onModalClose();
       } else {
         setMessage(message);
       }

@@ -1,6 +1,6 @@
 /** @jsx jsx */
 
-import React from "react";
+import React, { useContext } from "react";
 import { Grid, Modal } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import AppsIcon from "@material-ui/icons/Apps";
@@ -11,9 +11,9 @@ import { Menu, MenuItem } from "@material-ui/core";
 import Popup from "./JoinOrCreateClassPopup/Popup";
 import CreateClassPopupAgreement from "./JoinOrCreateClassPopup/CreateClassPopupAgreement";
 import CreateClassPopup from "./JoinOrCreateClassPopup/CreateClassPopup";
-import { styledIcon } from "./Card/Card.style";
+import LockIcon from "@material-ui/icons/Lock";
 import { SignIn } from "./Register/SignIn";
-import { prependOnceListener } from "cluster";
+import UserContext from "../Context/authContext";
 
 const StyledHeaderIcons = styled(Grid)`
   display: flex;
@@ -58,6 +58,7 @@ const StyledIcon = styled("div")`
 `;
 
 function Home(props: any) {
+  const { user, setUser } = useContext(UserContext);
   const [option, setOption] = React.useState(false);
   const [showJoinClass, setshowJoinClass] = React.useState(false);
   const [showCreateClass, setshowCreateClass] = React.useState(false);
@@ -65,8 +66,6 @@ function Home(props: any) {
   const [openProfile, setOpenProfile] = React.useState(false);
   const [anchorElAddIcon, setAnchorElAddIcon] = React.useState(null);
   const [openSignIn, setOpenSignIn] = React.useState(false);
-
-  console.log(props.loggedInUser);
   const onClickAdd = (event: any) => {
     setOption(!option);
     setAnchorElAddIcon(event.currentTarget);
@@ -95,6 +94,11 @@ function Home(props: any) {
   const handleSignIn = () => {
     setOpenSignIn(!openSignIn);
   };
+
+  const handleSignOut = () => {
+    localStorage.clear();
+    setUser({});
+  };
   return (
     <React.Fragment>
       <Grid>
@@ -102,17 +106,21 @@ function Home(props: any) {
           <StyledLabel>Classroom</StyledLabel>
 
           <StyledIcon>
-            <AddIcon onClick={onClickAdd} css={styleIcon} />
+            {user.token && <AddIcon onClick={onClickAdd} css={styleIcon} />}
             <Menu open={option} anchorEl={anchorElAddIcon} css={listItemStyled}>
               <StyledMenu onClick={JoinClass}>Join class</StyledMenu>
               <StyledMenu onClick={CreateClass}>Create class</StyledMenu>
             </Menu>
 
             <AppsIcon css={styleIcon}></AppsIcon>
-            <AccountBoxIcon
-              css={styleIcon}
-              onClick={handleSignIn}
-            ></AccountBoxIcon>
+            {!user.token ? (
+              <AccountBoxIcon
+                css={styleIcon}
+                onClick={handleSignIn}
+              ></AccountBoxIcon>
+            ) : (
+              <LockIcon css={styleIcon} onClick={handleSignOut}></LockIcon>
+            )}
             {openSignIn && (
               <SignIn
                 isSignUpOpen={openSignIn}
