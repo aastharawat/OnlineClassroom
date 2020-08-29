@@ -14,6 +14,7 @@ export default {
       }
     });
   },
+
   register: (createUserData) => {
     return fetch("http://localhost:8000/user/register", {
       method: "POST",
@@ -25,22 +26,40 @@ export default {
       .catch((err) => console.log(err));
   },
 
-  //     logout : () => {
-  //         await fetch("http://localhost:8000/user/register")
-  //         .then((res)=>res.json())
-  //         .then((data) => data)
-  //         .catch((err) => console.log(err));
-  //     },
+  // logout : () => {
+  //     await fetch("http://localhost:8000/user/register")
+  //     .then((res)=>res.json())
+  //     .then((data) => data)
+  //     .catch((err) => console.log(err));
+  // },
 
-  isAuthenticated: () => {
-    return fetch("http://localhost:8000/user/authenticated")
-      .then((res) => {
-        if (res.status !== 401) {
-          return res.json().then((data) => data);
-        } else {
-          return { isAuthenticated: false, user: { username: "" } };
-        }
-      })
-      .catch((err) => console.log(err));
+  isTokenValid: (token) => {
+    return fetch("http://localhost:8000/user/tokenIsValid", {
+      method: "POST",
+      headers: {
+        authorization: token,
+      },
+    }).then((res) => {
+      if (res.status !== 401) {
+        return res.json().then((data) => data);
+      } else {
+        return res.json().then((data) => data);
+      }
+    });
+  },
+
+  getClasses: (token) => {
+    return fetch("http://localhost:8000/user/classList", {
+      method: "GET",
+      headers: {
+        authorization: token,
+      },
+    }).then((res) => {
+      if (res.status !== 401) {
+        return res.json().then((data) => data);
+      } else {
+        return res.json().then((data) => data);
+      }
+    });
   },
 };

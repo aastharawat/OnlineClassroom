@@ -1,51 +1,52 @@
 /** @jsx jsx */
 
-import React from "react";
-import { Grid } from "@material-ui/core";
+import React, { useEffect, useContext, useState } from "react";
+import authService from "../../services/authService";
+import UserContext from "../../Context/authContext";
 import { IClassDetail } from "../../Interfaces/ClassDetail";
-import { StyledCard } from "./StyledCard";
 import { jsx, css } from "@emotion/core";
 import LoaderDesign from "../../Shared/Loader";
-
+import { Grid } from "@material-ui/core";
+import { StyledCard } from "./StyledCard";
 export const ClassCard = () => {
-  let [value, setValue] = React.useState<IClassDetail[]>([]);
+  const { user } = useContext(UserContext);
+  const [classes, setClasses] = useState<IClassDetail[]>([]);
   const [isLoading, setIsLoading] = React.useState(true);
 
-  React.useEffect(() => {
-    fetchData();
-  }, []);
+  useEffect(() => {
+    fetchCards();
+  });
 
-  const fetchData = async () => {
-    const res = await fetch("http://localhost:8000/user/list", {
-      method: "GET",
+  const fetchCards = async () => {
+    authService.getClasses(user.token).then((res) => {
+      setClasses(res.classes);
+      setIsLoading(false);
     });
-    const resData = await res.json();
-    setValue(resData);
-    setIsLoading(false);
   };
 
   return (
-    <Grid container direction="row">
+    <Grid container item direction="row">
       {isLoading && <LoaderDesign />}
-      {value.map((item, key) => (
-        <Grid
-          css={css`
-            padding: 20px;
-          `}
-        >
-          <StyledCard id={item._id}>
-            <div
-              css={css`
-                font-family: "Google Sans", Roboto, Arial, sans-serif;
-                font-size: 1.375rem;
-              `}
-            >
-              {item.className}
-            </div>
-            <div>{item.section}</div>
-          </StyledCard>
-        </Grid>
-      ))}
+      {classes &&
+        classes.map((item, key) => (
+          <Grid
+            css={css`
+              padding: 20px;
+            `}
+          >
+            <StyledCard id={item._id}>
+              <div
+                css={css`
+                  font-family: "Google Sans", Roboto, Arial, sans-serif;
+                  font-size: 1.375rem;
+                `}
+              >
+                {item.className}
+              </div>
+              <div>{item.section}</div>
+            </StyledCard>
+          </Grid>
+        ))}
     </Grid>
   );
 };
