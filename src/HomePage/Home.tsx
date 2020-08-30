@@ -14,6 +14,7 @@ import CreateClassPopup from "./JoinOrCreateClassPopup/CreateClassPopup";
 import LockIcon from "@material-ui/icons/Lock";
 import { SignIn } from "./Register/SignIn";
 import UserContext from "../Context/authContext";
+import { useHistory } from "react-router-dom";
 
 const StyledHeaderIcons = styled(Grid)`
   display: flex;
@@ -58,6 +59,7 @@ const StyledIcon = styled("div")`
 `;
 
 function Home(props: any) {
+  const history = useHistory();
   const { user, setUser } = useContext(UserContext);
   const [option, setOption] = React.useState(false);
   const [showJoinClass, setshowJoinClass] = React.useState(false);
@@ -98,6 +100,7 @@ function Home(props: any) {
   const handleSignOut = () => {
     localStorage.clear();
     setUser({});
+    history.push("/");
   };
   return (
     <React.Fragment>

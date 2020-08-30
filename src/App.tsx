@@ -38,7 +38,6 @@ export function App() {
     authService.isTokenValid(token).then((res) => {
       setUser({ token: token, email: res.email, username: res.username });
     });
-
   }, []);
 
   return (
@@ -71,15 +70,16 @@ export function App() {
               <Home />
             </Grid>
           </Header>
-
-          <Suspense fallback={<LoaderDesign />}>
-            <Route path="/home">
-              <ClassCard />
-            </Route>
-            <Route path="/profile/:id">
-              <Profile />
-            </Route>
-          </Suspense>
+          {user.token && (
+            <Suspense fallback={<LoaderDesign />}>
+              <Route path="/home">
+                <ClassCard />
+              </Route>
+              <Route path="/profile/:id">
+                <Profile />
+              </Route>
+            </Suspense>
+          )}
         </UserContext.Provider>
       </BrowserRouter>
     </React.Fragment>
