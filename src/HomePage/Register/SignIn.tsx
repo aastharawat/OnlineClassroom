@@ -33,7 +33,7 @@ export function SignIn(props: any) {
   const [openSignUp, setOpenSignUp] = React.useState<boolean>(props);
   const [email, setEmail] = React.useState<string>();
   const [password, setPassword] = React.useState<string>();
-  const [message, setMessage] = React.useState(null);
+  const [message, setMessage] = React.useState<string>();
   const { setUser } = useContext(UserContext);
 
   const handleSignInForm = async (e: any) => {
@@ -41,6 +41,7 @@ export function SignIn(props: any) {
     const userData = { email: email, password: password };
 
     AuthService.login(userData).then((data: any) => {
+      console.log(data.status);
       const { isAuthenticated, token } = data;
       if (isAuthenticated) {
         setUser({ token: token });
@@ -48,7 +49,7 @@ export function SignIn(props: any) {
         history.push("/home");
         props.onModalClose();
       } else {
-        setMessage(message);
+        setMessage("Inavlid login");
       }
     });
   };
@@ -63,6 +64,15 @@ export function SignIn(props: any) {
           justify="center"
           css={styledSignUpPage}
         >
+          {message && (
+            <div
+              css={css`
+                color: red;
+              `}
+            >
+              {message}
+            </div>
+          )}
           <TextField
             label="Email"
             type="email"

@@ -26,13 +26,6 @@ export default {
       .catch((err) => console.log(err));
   },
 
-  // logout : () => {
-  //     await fetch("http://localhost:8000/user/register")
-  //     .then((res)=>res.json())
-  //     .then((data) => data)
-  //     .catch((err) => console.log(err));
-  // },
-
   isTokenValid: (token) => {
     return fetch("http://localhost:8000/user/tokenIsValid", {
       method: "POST",
@@ -54,6 +47,40 @@ export default {
       headers: {
         authorization: token,
       },
+    }).then((res) => {
+      if (res.status !== 401) {
+        return res.json().then((data) => data);
+      } else {
+        return res.json().then((data) => data);
+      }
+    });
+  },
+
+  getClassById: (token, id) => {
+    return fetch("http://localhost:8000/user/classById", {
+      method: "GET",
+      headers: {
+        authorization: token,
+        id: id,
+      },
+    }).then((res) => {
+      if (res.status !== 401) {
+        return res.json().then((data) => data);
+      } else {
+        return res.json().then((data) => data);
+      }
+    });
+  },
+
+  createClass: (token, newClass) => {
+    console.log("aa", newClass, token);
+    return fetch("http://localhost:8000/user/class", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: token,
+      },
+      body: JSON.stringify(newClass),
     }).then((res) => {
       if (res.status !== 401) {
         return res.json().then((data) => data);
