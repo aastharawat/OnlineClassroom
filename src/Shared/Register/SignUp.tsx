@@ -29,11 +29,7 @@ export function SignUp(props: any) {
   };
 
   const handleSignUpForm = async () => {
-    console.log(createUserData);
-
-    authService.register(createUserData).then((data) => {
-      console.log("aastha", data);
-    });
+    authService.register(createUserData);
   };
 
   return (
