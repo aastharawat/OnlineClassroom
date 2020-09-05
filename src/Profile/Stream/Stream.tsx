@@ -1,7 +1,7 @@
 /** @jsx jsx */
 
 import { css, jsx } from "@emotion/core";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Grid } from "@material-ui/core";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import { CreatePost } from "./CreatePost";
@@ -20,7 +20,7 @@ import authService from "../../services/authService";
 
 export const Stream = (props: any) => {
   let { id } = useParams();
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [value, setValue] = React.useState<IClassDetail>();
   const [createPost, setCreatePost] = React.useState(false);
   const [inputPost, setinputPost] = React.useState<any>([]);
