@@ -3,10 +3,9 @@
 import React, { Suspense, useState, useEffect, lazy } from "react";
 import "./App.css";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import HeaderName from "./HomePage/Home";
 import { Hamburger } from "./Shared/Hamburger";
-import { Grid, Hidden } from "@material-ui/core";
-import { css, jsx } from "@emotion/core";
+import { Grid } from "@material-ui/core";
+import { jsx } from "@emotion/core";
 import styled from "@emotion/styled";
 import LoaderDesign from "./Shared/Loader";
 import { ClassCard } from "./HomePage/Card/ClassCard";
@@ -29,10 +28,14 @@ const Classwork = lazy(() =>
     default: Classwork,
   }))
 );
-export const Header = styled(Grid)`
-  width: 100%;
-  height: 4rem;
+export const Header = styled(`div`)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: #f8f8f8;
+  @media (max-width: 800px) {
+    flex-direction: column;
+  }
 `;
 
 export function App() {
@@ -54,55 +57,46 @@ export function App() {
   }, []);
 
   return (
-    <React.Fragment>
-      <BrowserRouter>
-        <UserContext.Provider value={{ user, setUser }}>
-          <Header css={css``} container direction="row">
-            <Grid item xs={1} sm={2} container direction="row">
-              <Hamburger />
-              <Hidden only={["xs", "sm"]}>
-                <HeaderName />
-              </Hidden>
-            </Grid>
-            <Grid item xs={8}>
-              {user.token && (
-                <Suspense fallback={<LoaderDesign />}>
-                  <Route path="/profile/:id">
-                    <Profile />
-                  </Route>
-                </Suspense>
-              )}
-            </Grid>
-            <Grid>
-              <HeaderRight />
-            </Grid>
-          </Header>
-          {user.token && (
-            <Grid>
+    <BrowserRouter>
+      <UserContext.Provider value={{ user, setUser }}>
+        <Header>
+          <Hamburger />
+          <div>
+            {user.token && (
               <Suspense fallback={<LoaderDesign />}>
-                <Route path="/home" exact>
-                  <ClassCard />
+                <Route path="/profile/:id">
+                  <Profile />
                 </Route>
-                <Switch>
-                  <Route path="/profile/:id" exact>
-                    <Stream />
-                  </Route>
-                  <Route path="/profile/:id/classwork">
-                    <Classwork />
-                  </Route>
-                  <Route path="/profile/:id/people">
-                    <People />
-                  </Route>
-                  <Route path="/profile/:id/Grades">
-                    <Grades />
-                  </Route>
-                </Switch>
               </Suspense>
-            </Grid>
-          )}
-        </UserContext.Provider>
-      </BrowserRouter>
-    </React.Fragment>
+            )}
+          </div>
+          <HeaderRight />
+        </Header>
+        {user.token && (
+          <Grid>
+            <Suspense fallback={<LoaderDesign />}>
+              <Route path="/" exact>
+                <ClassCard />
+              </Route>
+              <Switch>
+                <Route path="/profile/:id" exact>
+                  <Stream />
+                </Route>
+                <Route path="/profile/:id/classwork">
+                  <Classwork />
+                </Route>
+                <Route path="/profile/:id/people">
+                  <People />
+                </Route>
+                <Route path="/profile/:id/Grades">
+                  <Grades />
+                </Route>
+              </Switch>
+            </Suspense>
+          </Grid>
+        )}
+      </UserContext.Provider>
+    </BrowserRouter>
   );
 }
 

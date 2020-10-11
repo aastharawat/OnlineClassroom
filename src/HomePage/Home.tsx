@@ -6,9 +6,9 @@ import { jsx } from "@emotion/core";
 import UserContext from "../Context/authContext";
 
 const StyledLabel = styled("div")`
+  position: absolute;
   font-family: cursive;
-  font-size: 30px;
-  padding: 1rem;
+  font-size: 20px;
 `;
 
 function HeaderName() {
@@ -19,7 +19,7 @@ function HeaderName() {
       {!user.token ? (
         <StyledLabel>Classroom</StyledLabel>
       ) : (
-        <StyledLabel>{user.username}</StyledLabel>
+        <StyledLabel>{user.email}</StyledLabel>
       )}
     </React.Fragment>
   );

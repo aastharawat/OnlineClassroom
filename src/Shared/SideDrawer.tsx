@@ -53,7 +53,7 @@ export const SideDrawer = () => {
     <React.Fragment>
       <Grid css={styledSideDrawer}>
         <StyledLink
-          to="/home"
+          to="/"
           css={css`
             padding: 20px;
           `}

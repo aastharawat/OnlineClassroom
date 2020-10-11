@@ -32,6 +32,14 @@ export function SignIn(props: any) {
 
   const [openSignUp, setOpenSignUp] = React.useState<boolean>(props);
   const [email, setEmail] = React.useState<string>();
+  React.useEffect(() => {
+    console.log("hey dude", email);
+  }, [email]);
+
+  const setMail = (e: any) => {
+    setEmail(e.target.value);
+    console.log(email);
+  };
   const [password, setPassword] = React.useState<string>();
   const [message, setMessage] = React.useState<string>();
   const { setUser } = useContext(UserContext);
@@ -46,10 +54,10 @@ export function SignIn(props: any) {
       if (isAuthenticated) {
         setUser({ token: token });
         localStorage.setItem("auth-token", token);
-        history.push("/home");
+        history.push("/");
         props.onModalClose();
       } else {
-        setMessage("Inavlid login");
+        setMessage("Invalid login");
       }
     });
   };
@@ -80,9 +88,7 @@ export function SignIn(props: any) {
             margin="normal"
             variant="outlined"
             fullWidth
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
+            onChange={setMail}
             color="primary"
             required
           />

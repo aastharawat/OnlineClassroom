@@ -16,13 +16,10 @@ import { SignIn } from "../Shared/Register/SignIn";
 import UserContext from "../Context/authContext";
 import { useHistory } from "react-router-dom";
 
-const StyledHeaderIcons = styled(Grid)`
-  display: flex;
-  padding: 20px;
-`;
+const StyledHeaderIcons = styled(Grid)``;
 
 const styleIcon = css`
-  padding-left: 15px;
+  padding-right: 15px;
   color: #5f636;
   :hover {
     color: grey;

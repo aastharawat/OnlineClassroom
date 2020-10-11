@@ -3,14 +3,21 @@
 import MenuIcon from "@material-ui/icons/Menu";
 import { css, jsx } from "@emotion/core";
 import { SideDrawer } from "./SideDrawer";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Modal } from "@material-ui/core";
+import styled from "@emotion/styled";
 
+const StyledHamburger = styled(`div`)`
+  @media (max-width: 800px) {
+    display: flex;
+    justify-items: flex-start;
+  }
+`;
 export const Hamburger = (props: any) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <React.Fragment>
+    <StyledHamburger>
       <Modal
         closeAfterTransition
         open={isOpen}
@@ -24,7 +31,6 @@ export const Hamburger = (props: any) => {
       <div
         css={css`
           height: 100%;
-          padding: 15px;
           color: #5f636;
         `}
       >
@@ -35,6 +41,6 @@ export const Hamburger = (props: any) => {
           }}
         ></MenuIcon>
       </div>
-    </React.Fragment>
+    </StyledHamburger>
   );
 };

@@ -15,6 +15,8 @@ import {
   StyledBox,
   StyledText,
   StyledCommunicateBox,
+  StyledPostBox,
+  StreamHeader,
 } from "./stream.style";
 import authService from "../../services/authService";
 
@@ -35,13 +37,7 @@ export const Stream = (props: any) => {
     });
   };
   return (
-    <div
-      css={css`
-        width: 65%;
-        padding-left: 15%;
-        padding-top: 3%;
-      `}
-    >
+    <StreamHeader>
       {value ? (
         <div>
           <Grid>
@@ -63,27 +59,18 @@ export const Stream = (props: any) => {
               padding-top: 3%;
             `}
           >
-            <Grid xs={3}>
+            <Grid xs={12} sm={3} md={3}>
               <StyledBox
                 css={css`
                   height: 100px;
-                  width: 200px;
                 `}
               >
                 Upcoming
               </StyledBox>
             </Grid>
-            <Grid xs={9}>
-              <Grid
-                css={css`
-                  padding-left: 20px;
-                `}
-              >
-                <Grid
-                  css={css`
-                    padding-bottom: 20px;
-                  `}
-                >
+            <Grid xs={12} sm={9} md={9}>
+              <StyledPostBox>
+                <Grid>
                   {createPost ? (
                     <CreatePost
                       open={() => setCreatePost(!createPost)}
@@ -111,7 +98,11 @@ export const Stream = (props: any) => {
                     </StyledBox>
                   )}
                 </Grid>
-                <Grid>
+                <Grid
+                  css={css`
+                    padding-top: 20px;
+                  `}
+                >
                   {!inputPost.length ? (
                     <StyledBox
                       css={css`
@@ -134,16 +125,18 @@ export const Stream = (props: any) => {
                       </StyledCommunicateBox>
                     </StyledBox>
                   ) : (
-                    inputPost.map((post: any) => <Post post={post}></Post>)
+                    inputPost.map((post: any) => (
+                      <Post post={post} userName={user.email}></Post>
+                    ))
                   )}
                 </Grid>
-              </Grid>
+              </StyledPostBox>
             </Grid>
           </Grid>
         </div>
       ) : (
         <div>No data </div>
       )}
-    </div>
+    </StreamHeader>
   );
 };
